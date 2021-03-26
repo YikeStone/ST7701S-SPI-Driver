@@ -618,7 +618,7 @@ impl CommandsGeneral {
     /// eg. for a BK1 Command2 instruction, "current" must be set to
     /// Command2Selection::BK1.
     pub fn set_command_2(set: Command2Selection) -> Result<Command, &'static str> {
-        Ok(Command::new(Self::CND2BKxSEL as u8).args(&[0x77, 0x01, 0x00, 0x00, set as u8]))
+        Ok(Command::new(Self::CND2BKxSEL as u8).args(&[0x77, 0x01, 0x00, 0x00, 0x10, set as u8]))
     }
 }
 
@@ -672,7 +672,7 @@ impl BK0Command2 {
         let front_porch: u8 = (mode.vtotal - mode.vsync_end).try_into().unwrap();
         let back_porch: u8 = (mode.vsync_start - mode.vdisplay).try_into().unwrap();
         Self::validate(CMD2, || {
-            Command::new(Self::PORCTRL as u8).args(&[front_porch, back_porch])
+            Command::new(Self::PORCTRL as u8).args(&[front_porch, 0x02])
         })
     }
 
